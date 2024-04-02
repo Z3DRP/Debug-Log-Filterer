@@ -39,6 +39,7 @@ def getDelims():
     delimiters = [
         'ENTERING_MANAGED_PKG',
         'STATEMENT_EXECUTE',
+        'USER_INFO',
         'HEAP_ALLOCATE',
         'CUMULATIVE_LIMIT_USAGE',
         'CUMULATIVE_PROFILING',
