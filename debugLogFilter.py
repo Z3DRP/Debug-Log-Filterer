@@ -24,6 +24,7 @@ def main():
             else:
                 delims = getDelims()
                 filteredFileLines = debugLog.filterFile(delims)
+                print(f"filteredLines: {filteredFileLines}")
                 if len(filteredFileLines) > 0:
                     print('file was successfully filterd')
                     writeNewFile(filteredFileLines)
@@ -52,8 +53,8 @@ def getDelims():
         customDelims = customDelimiters.split(',')
         if len(customDelims) > 0:
             delims = [x for y in [delimiters, customDelims] for x in y]
-        else:
-            delims = delimiters
+    else:
+        delims = delimiters
     return delims
 
 

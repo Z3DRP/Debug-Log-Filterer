@@ -1,3 +1,4 @@
+#by zach palmer
 import os
 
 class DebugFile:
@@ -40,6 +41,7 @@ class DebugFile:
         return self._lines
 
     def filterFile(self, delims):
+        print(f"delims: {delims}")
         try:
             print('filtering file...')
             for line in self._lines:
