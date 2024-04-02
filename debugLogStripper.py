@@ -106,6 +106,7 @@ def writeNewFile(lines):
             #write empty line for formatting
             nf.write('\n')
         nf.close()
+        print('file created successfully and is avaialbe in current directory.')
     except Exception as e:
         print(f"An error occurred while writing file: {e}")
 
