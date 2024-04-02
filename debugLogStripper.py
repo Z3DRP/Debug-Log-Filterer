@@ -103,6 +103,8 @@ def writeNewFile(lines):
         nf = open(f'fltDebug_{currDate.month}_{currDate.day}_{currDate.microsecond}', 'a')
         for line in lines:
             nf.write(line)
+            #write empty line for formatting
+            nf.write('\n')
         nf.close()
     except Exception as e:
         print(f"An error occurred while writing file: {e}")
