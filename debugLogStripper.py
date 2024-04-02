@@ -9,7 +9,7 @@ print('****DEBUG LOG STRIPPER****')
 print('Seperate out lines from debug logs based on a demiliter')
 print('defaults to filtering out lines such as manage pkg, var assigments, and statement execution lines.')
 print('Add custom delimiters by adding delimiters seperated by commas when promoted.')
-print('--------------------------------------------------------')
+print('---------------------------------------------------------------------------------------------------')
 
 
 def main():
@@ -60,24 +60,30 @@ def getFile():
     while choice.lower() != 'q' and choice.lower() != 's':
         #get current working directory
         cwd = os.getcwd()
-        print('Enter action (F, T, C, S, Q):')
-        choice = str(input("Actions: show all <F>iles, <T>ext files, <C>hange directory, <S>elect file, <Q>uit: "))
+        print(f"Current Direcotry: {cwd}")
+        print()
+        print('Enter action (F, T, D, C, S, Q):')
+        choice = str(input("Actions: show all <F>iles, <T>ext files, <D>irectories, <C>hange directory, <S>elect file, <Q>uit: "))
         if choice.lower() == 'c':
-            dirName = str(input("<..> for parent or new directory name: "))
-            if dirName.lower() != "":
+            dirName = str(input("Enter <..> for parent directory or enter new directory name: "))
+            if dirName != "":
                 try:
                     os.chdir(dirName)
+                    print(f"Current Directory changed to: {dirName}")
+                    print()
                 except Exception as e:
                     print(f"CD:Error: {e}")
             else:
                 print("No directory entered")
-        elif choice.lower() == 'f' or choice.lower() == 't':
+        elif choice.lower() == 'f' or choice.lower() == 't' or choice.lower() == 'd':
             for entry in os.listdir(cwd):
                 fullpath = os.path.join(cwd, entry)
                 if choice.lower() == 'f' and os.path.isfile(fullpath):
                     print(f"File: {entry}")
                 elif choice.lower() == 't' and os.path.isfile(fullpath) and entry.endswith('.txt'):
-                    print(f"Text File: {entry}")
+                    print(f"Txt File: {entry}")
+                elif choice.lower() == 'd' and os.path.isfile(fullpath):
+                    print(f"Dir: {entry}")
         elif choice.lower() == 's':
             fileName = str(input("Enter file name (with extension): "))
             #verify input is file
