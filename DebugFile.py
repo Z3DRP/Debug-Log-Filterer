@@ -45,7 +45,7 @@ class DebugFile:
         try:
             print('filtering file...')
             for line in self._lines:
-                lineHasDelims = any(ele in line for ele in delims)
+                lineHasDelims = any(element in line for element in delims)
                 if not lineHasDelims:
                     self._filteredLines.append(line)
         except Exception:
