@@ -6,7 +6,7 @@ import os
 from DebugFile import DebugFile
 from datetime import datetime
 print()
-print('****DEBUG LOG STRIPPER****')
+print('****DEBUG LOG Filterer****')
 print('Seperate out lines from debug logs based on a demiliter')
 print('defaults to filtering out lines such as manage pkg, var assigments, and statement execution lines.')
 print('Add custom delimiters by adding delimiters seperated by commas when promoted.')
@@ -24,7 +24,6 @@ def main():
             else:
                 delims = getDelims()
                 filteredFileLines = debugLog.filterFile(delims)
-                print(f"filteredLines: {filteredFileLines}")
                 if len(filteredFileLines) > 0:
                     print('file was successfully filterd')
                     writeNewFile(filteredFileLines)
