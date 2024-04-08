@@ -3,8 +3,10 @@ import os
 
 class DebugFile:
     def __init__(self, path):
+        self._name = path
         self.setFile(path)
         self._error = ""
+        self._filterError = ""
         self._lines = []
         self._lineCount = 0
         self._filteredLines = []
@@ -23,7 +25,7 @@ class DebugFile:
                     EOF = True
             file.close()
         except OSError as e:
-            self._error = f"DBE: {e}"
+            self._error = f"DBL: {e}"
 
     def setFile(self, path):
         self._Path = path
@@ -39,6 +41,9 @@ class DebugFile:
 
     def getFileLines(self):
         return self._lines
+    
+    def getName(self):
+        return self._name
 
     def filterFile(self, delims):
         print(f"delims: {delims}")
@@ -48,12 +53,15 @@ class DebugFile:
                 lineHasDelims = any(element in line for element in delims)
                 if not lineHasDelims:
                     self._filteredLines.append(line)
-        except Exception:
-            raise Exception('An unexpected error occurred while filtering file.')
-        return self._filteredLines
+        except Exception as e:
+            self._filterError = f"DBL [Filter Error]: {e}"
+
 
     def getFilteredFileLines(self):
         return self._filteredLines
 
     def getFilteredFileLineCount(self):
-        return self._filteredLineCount
+        return len(self._filteredLines)
+    
+    def getFilterErrorMsg(self):
+        return self._filterError
