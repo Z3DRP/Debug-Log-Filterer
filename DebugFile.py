@@ -1,4 +1,6 @@
-#by zach palmer
+#!user/bin/env python 3
+#debug log object that opens the file and stores contents in list  has filter method which filters file based on delimiters passed in and stores in a list
+#by Zach Palmer
 import os
 
 class DebugFile:

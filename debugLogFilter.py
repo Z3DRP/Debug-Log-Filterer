@@ -1,5 +1,5 @@
 #!user/bin/env python 3
-#command line tool for parsing debug logs
+#command line tool for parsing debug logs and navigating file system
 #by Zach Palmer
 
 import os
