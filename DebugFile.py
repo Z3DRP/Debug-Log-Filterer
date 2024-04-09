@@ -53,6 +53,7 @@ class DebugFile:
                 lineHasDelims = any(element in line for element in delims)
                 if not lineHasDelims:
                     self._filteredLines.append(line)
+            self._filteredLineCount = len(self._filteredLines)
         except Exception as e:
             self._filterError = f"DBL [Filter Error]: {e}"
 
@@ -61,7 +62,7 @@ class DebugFile:
         return self._filteredLines
 
     def getFilteredFileLineCount(self):
-        return len(self._filteredLines)
+        return self._filteredLineCount
     
     def getFilterErrorMsg(self):
         return self._filterError

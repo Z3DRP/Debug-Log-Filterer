@@ -29,7 +29,7 @@ def main():
                     debugLog.filterFile(delims)
                     if debugLog.getFilterErrorMsg() != "":
                         errors.append(debugLog.getFilterErrorMsg())
-                    elif debugLog.getFilteredFileLineCount > 0:
+                    elif debugLog.getFilteredFileLineCount() > 0:
                         filteredFiles.append({
                             'lines': debugLog.getFilteredFileLines(),
                             'name': debugLog.getName(),
@@ -155,13 +155,13 @@ def getFiles():
             filePaths = []
             filesInDir = 0
             for entry in os.listdir(cwd):
-                fullpath = os.path.join(cwd, fileName)
+                fullpath = os.path.join(cwd, entry)
                 if os.path.isfile(fullpath) and entry.endswith('.txt'):
                     filesInDir += 1
                     filePaths.append(fullpath)
-                if filesInDir == 0:
-                    print('The current directory does not have any files that can be filtered')
-                    print('-----------------------------------------------------------------------')
+            if filesInDir == 0:
+                print('The current directory does not have any files that can be filtered')
+                print('-----------------------------------------------------------------------')
 
         elif choice.lower() == 'q':
             print('quiting...')
@@ -171,33 +171,40 @@ def getFiles():
             print('---------------------------------')
             print()
 
-    return fullpath, False if choice.lower() == 's' else filePaths, False
+    if choice.lower() == 's':
+        return fullpath, False
+    else:
+        return filePaths, False
 
 def writeFiles(files):
     print('creating new file...')
     print()
     errors = []
+    currDate = datetime.now()
+    dstr = f"Filtered Logs {currDate.strftime('%b %d %y')} {currDate.strftime('%H%M %p')}"
+    if not os.path.exists(dstr):
+        os.mkdir(dstr, mode=0o755)
     for file in files:
-        writeNewFile(file)
-        if file.errors:
-            errors.append(file.error)
+        writeNewFile(file, dstr)
+        if file.get('error'):
+            errors.append(file.get('error'))
     return errors
 
 
-def writeNewFile(file):
-    currDate = datetime.now()
+def writeNewFile(file, dirName):
+    today = datetime.now()
     errors = []
     # print('creating new file...')
     # print()
     try:
-        nf = open(f'fltDebug_{currDate.month}_{currDate.day}_{currDate.microsecond}', 'a')
-        for line in file.lines:
+        nf = open(f'fDebug {today.strftime('%H%M %p')}', 'a')
+        for line in file.get('lines'):
             nf.write(line)
             #write empty line for formatting
             nf.write('\n')
         nf.close()
     except Exception as e:
-        file.error = f"Writing File Error: {e}"
+        file['error']= f"Writing File Error: {e}"
 
 
 if __name__ == '__main__':
